@@ -1,1 +1,1 @@
-This repository have PHP pages developed using HTML, CSS and PHP. These pages are used as custome templates for wordpress website.
+This repository have PHP pages developed using HTML, CSS and PHP. These pages are used as custome templates for wordpress website. There are three PHP files for three type of calculator. One is for general which includes electricity and transport, second involves calculating on the basis of the car year, make and model. The last calculates on the basis of our journey which is done by making use of google maps API.
