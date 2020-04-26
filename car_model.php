@@ -1,6 +1,13 @@
+/** 
+The code below fetches data from the inbuilt wordpress database by making use of wpdb class.
+Here we made use of prepare statements as a preventive measure against sql injection
+
+*/
+
 <?php
 
-$path = $_SERVER['DOCUMENT_ROOT'];
+$path = $_SERVER['DOCUMENT_ROOT']; // this is included so that wpdb class can be accessed outside wordpress content folder. As all the 
+				  // custom pages are included outside wordpress content folder.
 
 include_once $path . '/wp-config.php';
 include_once $path . '/wp-load.php';
