@@ -1,3 +1,12 @@
+/** 
+The below PHP code
+checks for the POST array final submit element, which is set once form is submitted.
+Then for each field in the form the values are fetched and multiplied with the factors. These factors are the factor that are used 
+to calculate the carbon footprint related to particular activity 
+Finally, after the whole calculation is done. The final result is alerted to the user using alert function of javascript.
+*/
+
+
 <?php
 if (isset($_POST["final_submit"]))
 {
