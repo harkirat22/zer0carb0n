@@ -23,7 +23,7 @@ if (isset($_POST["final_submit"]))
          $Make = $_POST['car_brand'];
          $Model = $_POST['car_model'];
          $x =$wpdb->get_var($wpdb->prepare("SELECT FuelLifeCycleCO2 FROM wp_car_models WHERE Year = %d AND Brand = %s AND Model=%s ",$Year,$Make,$Model));
-
+s
          if ($x !=0){
          echo "<script>alert('Your car's emission is ' + $x + ' gms/km');</script>";}
 	elseif ($x==0){
