@@ -1,0 +1,289 @@
+<!--
+This is the updated version of generic calculator, all the validation and calculation for the input fields is 
+achieved using javascript and jquery
+-->
+
+<html>
+<body>
+    <div>
+    <h1 style="font-size: 24px;margin: 8px;color: #23A455; padding-left: 30px;"><strong>FIND YOUR CARBON FOOTPRINT</strong></h1>
+    <form style="margin: 0px;padding-left: 30px;">
+        <div style="width: 350px;margin: 8px;">
+            <ul class="nav nav-tabs">
+                <li class="nav-item"><a class="nav-link active" role="tab" data-toggle="tab" href="#tab-1" style="font-size: 20px; color:#23A455">Electricity&nbsp;<i class="fas fa-bolt" style="margin: 5px;height: 15px;color: #23A455;font-size: 18px;"></i></a></li>
+                <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-2" style="font-size: 20px; color:#23A455">Transport&nbsp;<i class="fa fa-car" style="margin: 6px;font-size: 18px;"></i></a></li>
+            </ul>
+            <div class="tab-content" style="width: 500px;">
+                <div class="tab-pane active" role="tabpanel" id="tab-1" style="width: 500px;">
+					<label style="width: 400px;margin: 10px;"><strong>Enter your monthly electricity consumption</strong></label>
+					<input class="form-control" type="text" data-bs-hover-animate="pulse" style="width: 350px;margin-left: 8px;" minlength="1"
+                                                maxlength="5" id="e-unit" oninput="myFunction1()"> 
+											<p id="e-unit-error-message" style="color: Red;"></p>
+					<label style="font-size: 14px; color: #23A455; width: 200px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; margin-top: 0px; margin-bottom: 10px; margin-right: 0px; margin-left: 0px;">In Kwh</label>
+                   <br>
+				    <p
+                        style="margin: 8px;color: #23A455;">Navigate to Transport tab to continue</p>
+                </div>
+                <div class="tab-pane" role="tabpanel" id="tab-2"><label style="width: 400px;margin: 8px;"><strong>Your preferred mode of transport</strong></label>
+                    <div class="form-check" style="width: 300px;margin: 8px;"><input class="form-check-input" type="checkbox" name="car-check" id="formCheck-1"><label class="form-check-label" for="formCheck-1" style="padding: 5px;">Car</label></div>
+                    <div class="form-check" style="width: 300px;margin: 8px;"><input class="form-check-input" type="checkbox" name="public-check" id="formCheck-1"><label class="form-check-label" for="formCheck-1" style="padding: 5px;">Public Transport</label></div>
+                    <p style="color: #23A455;font-size: 14px;margin: 8px;width: 600px;">Choose one or more options</p>
+					
+					<div class="car-info" style="display:none">
+					
+                    <h1 style="font-size: 32px;margin: 8px;padding: 0px;">Car&nbsp;<i class="fa fa-car" style="color: rgb(8,140,69);"></i></h1><label style="width: 500px;margin-left: 8px;"><strong>Input the milage of your car</strong><br></label><input class="form-control" type="text" data-bs-hover-animate="pulse"
+                        style="width: 350px;margin-left: 8px;padding: 9px;" oninput="myFunction2()" id="fuel"> 
+											<p id="fuel-error-message" style="color: Red;"></p>
+											
+											<label style="width: 200px;color: #23A455; font-size: 14px;padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; margin-top: 0px; margin-bottom: 10px; margin-right: 0px; margin-left: 0px;">In Liters/100 Kms</label>
+											
+											<label style="width: 700px;margin: 8px;"><strong>Average distance that you travel by your car</strong><br></label>
+                    <input
+                        class="form-control" type="text" data-bs-hover-animate="pulse" style="width: 350px;margin-left: 8px;" oninput="myFunction3()" id="car-distance"> 
+											<p id="car-distance-error-message" style="color: Red;"></p>
+											
+											<label style="padding-top: 0px;color: #23A455; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; margin-top: 0px; margin-bottom: 10px; margin-right: 0px; margin-left: 0px;font-size: 14px;">In Kms</label>
+					
+					</div>	
+					
+					<div class="publictransport-info" style="display:none">	
+						
+                        <h1 style="font-size: 32px;margin: 8px;">Public Transport&nbsp;<i class="fa fa-train" style="color: rgb(136,204,23);"></i></h1><label style="margin: 8px;"><strong>Your preferred public transport option</strong></label>
+                        <div class="form-check" style="margin: 9px;"><input class="form-check-input" type="checkbox" name="public-train" id="formCheck-2"><label class="form-check-label" for="formCheck-2" style="padding: 5px;">Train</label></div>
+                        <div class="form-check" style="margin: 8px;"><input class="form-check-input" type="checkbox" name="public-bus" id="formCheck-2"><label class="form-check-label" for="formCheck-2" style="padding: 5px;">Bus</label></div>
+                        <div class="form-check" style="margin: 8px;"><input class="form-check-input" type="checkbox" name="public-tram" id="formCheck-2"><label class="form-check-label" for="formCheck-2" style="padding: 5px;">Tram</label></div>
+                        <p style="color: #23A455;font-size: 14px;margin: 8px;">Choose one or more options.</p>
+						
+						
+						
+						
+						<div class="publictransport-train" style="display:none">	
+							
+						<label style="width: 500px;margin: 8px;"><strong>Average distance travelled by Train?</strong></label><input class="form-control" type="text" data-bs-hover-animate="pulse" style="width: 350px;margin-left: 8px;" oninput="myFunction4()" id="train-distance"> 
+											<p id="train-distance-error-message" style="color: Red;"></p>
+                        <label
+                            style="color: #23A455; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; margin-top: 0px; margin-bottom: 10px; margin-right: 0px; margin-left: 0px;font-size: 14px;">In Kms</label>
+						
+						</div>	
+						
+						
+						
+						<div class="publictransport-bus" style="display:none">	
+							
+							<label style="width: 700px;margin-left: 8px;"><strong>Average distance travelled by Bus?</strong></label><input class="form-control" type="text" data-bs-hover-animate="pulse" style="width: 350px;margin-left: 8px;" oninput="myFunction5()" id="bus-distance"> 
+											<p id="bus-distance-error-message" style="color: Red;"></p>
+                            <label
+                                style="color: #23A455; font-size: 14px;padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; margin-top: 0px; margin-bottom: 10px; margin-right: 0px; margin-left: 0px;">In Kms</label>
+						
+						</div>
+						
+						
+						<div class="publictransport-tram" style="display:none">			
+								
+								<label style="width: 700px;margin-left: 8px;"><strong>Average distance travelled by Tram?</strong></label><input class="form-control" type="text" data-bs-hover-animate="pulse" style="width: 350px;margin-left: 8px;" oninput="myFunction6()" id="tram-distance"> 
+											<p id="tram-distance-error-message" style="color: Red;"></p> 
+                                <label
+                                    style="color: #23A455; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 10px; margin-top: 0px; margin-bottom: 10px; margin-right: 0px; margin-left: 0px;font-size: 14px;">In Kms</label>
+									
+						</div>
+                </div>
+            </div>
+        </div>
+		
+			</div>
+			
+			
+		<button class="btn btn-primary" onclick="calculateCarbonFootprint()" type="button" style="width: 350px; height:50px;text-align: center; font-size: 14px; background-color: #23A455; margin: 8px;">CALCULATE</button>
+	<button class="btn btn-primary" onclick="Re_calculateCarbonFootprint()" type="button" style="width: 350px; height:50px;text-align: center; font-size: 14px;background-color: #23A455; margin: 8px;">RESET</button>
+	
+	
+	<p id="answer"  style="font-size: 16px;padding-left: 30px; font-weight: 500; margin: 8px; color: #000000; width: 400px"></p>
+	
+	<p id="offset"  style="font-size: 16px; padding-left: 30px;font-weight: 500; margin: 8px; color: #000000; width: 400px"></p>
+	
+	</form>
+		
+		
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>	
+	</div>
+
+</body>
+
+
+</html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $('input[name=car-check]').on("click",function(){
+      if ($(this).is(':checked')) {
+          $(".car-info").show();               
+      } else {
+          $(".car-info").hide();               
+      }	  
+  });
+  $('input[name=public-check]').on("click",function(){
+      if ($(this).is(':checked')) {
+         $(".publictransport-info").show();           
+      } else {
+         $(".publictransport-info").hide();         
+      }	  
+  });
+  $('input[name=public-train]').on("click",function(){
+      if ($(this).is(':checked')) {
+         $(".publictransport-train").show();           
+      } else {
+         $(".publictransport-train").hide();         
+      }	  
+  });
+  $('input[name=public-bus]').on("click",function(){
+      if ($(this).is(':checked')) {
+         $(".publictransport-bus").show();           
+      } else {
+         $(".publictransport-bus").hide();         
+      }	  
+  });
+  $('input[name=public-tram]').on("click",function(){
+      if ($(this).is(':checked')) {
+         $(".publictransport-tram").show();           
+      } else {
+         $(".publictransport-tram").hide();         
+      }	  
+  });
+  
+});
+
+</script>
+
+<script>
+function myFunction1() {
+  var x, text;
+
+  // Get the value of the input field with id="e-unit"
+  x = document.getElementById("e-unit").value;
+
+  // If x is Not a Number or less than one or greater than 999
+  if (isNaN(x) || x < 0 || x > 99999) {	  
+    text = "Not valid! Please input only positive numeric value of max 5 digits";	
+  } else{
+	  text = "";
+  }
+  document.getElementById("e-unit-error-message").innerHTML = text;
+}
+
+function myFunction2() {
+  var x, text;
+
+  // Get the value of the input field with id="e-unit"
+  x = document.getElementById("fuel").value;
+
+  // If x is Not a Number or less than one or greater than 999
+  if (isNaN(x) || x < 0 || x > 99999) {	  
+    text = "Not valid! Please input only positive numeric value of max 5 digits";	
+  } else{
+	  text = "";
+  }
+  document.getElementById("fuel-error-message").innerHTML = text;
+}
+function myFunction3() {
+  var x, text;
+
+  // Get the value of the input field with id="e-unit"
+  x = document.getElementById("car-distance").value;
+
+  // If x is Not a Number or less than one or greater than 999
+  if (isNaN(x) || x < 0 || x > 99999) {	  
+    text = "Not valid! Please input only positive numeric value of max 5 digits";	
+  } else{
+	  text = "";
+  }
+  document.getElementById("car-distance-error-message").innerHTML = text;
+}
+function myFunction4() {
+  var x, text;
+
+  // Get the value of the input field with id="e-unit"
+  x = document.getElementById("train-distance").value;
+
+  // If x is Not a Number or less than one or greater than 999
+  if (isNaN(x) || x < 0 || x > 99999) {	  
+    text = "Not valid! Please input only positive numeric value of max 5 digits";	
+  } else{
+	  text = "";
+  }
+  document.getElementById("train-distance-error-message").innerHTML = text;
+}
+function myFunction5() {
+  var x, text;
+
+  // Get the value of the input field with id="e-unit"
+  x = document.getElementById("bus-distance").value;
+
+  // If x is Not a Number or less than one or greater than 999
+  if (isNaN(x) || x < 0 || x > 99999) {	  
+    text = "Not valid! Please input only positive numeric value of max 5 digits";	
+  } else{
+	  text = "";
+  }
+  document.getElementById("bus-distance-error-message").innerHTML = text;
+}
+function myFunction6() {
+  var x, text;
+
+  // Get the value of the input field with id="e-unit"
+  x = document.getElementById("tram-distance").value;
+
+  // If x is Not a Number or less than one or greater than 999
+  if (isNaN(x) || x < 0 || x > 99999) {	  
+    text = "Not valid! Please input only positive numeric value of max 5 digits";	
+  } else{
+	  text = "";
+  }
+  document.getElementById("tram-distance-error-message").innerHTML = text;
+}
+
+</script>
+<!--
+Below script get the values from the input elements and calculates 
+the final carbon footprint
+-->
+<script>
+	function calculateCarbonFootprint(){
+		var e_unit, fuel, car_distance, train_distance, bus_distance, tram_distance;
+		
+		e_unit = document.getElementById("e-unit").value;
+		fuel = document.getElementById("fuel").value;
+		car_distance = document.getElementById("car-distance").value;
+		train_distance = document.getElementById("train-distance").value;
+		bus_distance = document.getElementById("bus-distance").value;
+		tram_distance = document.getElementById("tram-distance").value;
+	
+	
+		var elec_footprint = e_unit*1.17;
+		var car_fuel_used = fuel*(car_distance/100);
+		var car_footprint = car_fuel_used * 2.3 ;
+		var train_footprint = train_distance * 0.21 ;
+		var bus_footprint = bus_distance * 0.22 ;
+		var tram_footprint = tram_distance * 0.20 ;
+		var final_result = elec_footprint + car_footprint + train_footprint + bus_footprint + tram_footprint;
+		var offset_trees = final_result / 7.716;
+		
+			
+		if(!isNaN(final_result)){
+			document.getElementById("answer").innerHTML="Your Carbon Footprint is : "+final_result.toFixed(2) + " Kg of CO2";
+			
+		}
+		
+		if(!isNaN(offset_trees)){
+			document.getElementById("offset").innerHTML="To offset you would need : "+ offset_trees.toFixed(0) + " Trees";
+			
+		}
+	
+	}	
+	
+	function Re_calculateCarbonFootprint(){
+	    window.location.reload();
+	} 
+	
+</script>
