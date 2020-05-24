@@ -1,0 +1,158 @@
+<!-- 
+This page provides the user with the dynamic dropdown list. The dependency and data for options of each drop down list
+is fetched from the database. For fetching the data, AJAX request is contructed on onchange event handler of jquery.
+-->
+
+<body style="height: 643px;">	
+	 <h1 style="width: 500px;font-size: 24px;height: 30px;color: #23A455;"><strong>FIND YOUR CAR'S CARBON EMISSION</strong></h1>
+    <form method="post" id="form1" style="width: 400px;padding: 0px;">
+        <fieldset id="car-transport"><label style="padding: 8px;height: 10px;"><strong>Select The Car Year</strong></label>
+		<select class="form-control" type="text" data-bs-hover-animate="pulse" id="car_year" name="car_year" style="height: 30px;padding: 7px;width: 400px;margin: 7px;"
+                required> 
+											                    <option value="">Select year</option>
+
+
+                    <?php
+
+                      
+						global $wpdb;
+                        $sql = "SELECT DISTINCT Year FROM wp_car_models ORDER BY Year ASC"; 
+
+                        $result = $wpdb->get_results($sql);
+
+                        foreach( $result as $r){
+
+                            echo "<option value='$r->Year'>$r->Year</option>";
+
+                        }
+
+                    ?>
+				
+				</select>
+				
+				<label style="padding: 8px;height: 10px;"><strong>Select The Make of your Car </strong></label>
+				<select class="form-control" type="text" data-bs-hover-animate="pulse" placeholder="e.g: Ford"
+                style="height: 30px;padding: 7px;width: 400px;margin: 7px;" required minlength="1" maxlength="50" id="car_make" name="car_make"> 
+				<option value="">Select Car year first</option>
+							</select>			
+				<label style="padding: 9px;margin: 0px;height: 10px;"><strong>Select The Model of your Car</strong></label><select class="form-control"
+                type="text" data-bs-hover-animate="pulse" style="width: 400px;height: 30px;margin: 7px;padding: 7px;" required id="car_model" name="car_model" > 
+				
+			<option value="">Select Car Brand first</option>
+							</select>		
+			</fieldset>
+
+
+
+     
+        <button class="btn btn-primary" onclick="calculate()" type="button" style="width: 400px; height:50px;text-align: center; font-size: 14px;background-color: #23A455; margin: 8px;">Calculate</button>
+			<button class="btn btn-primary" onclick="Re_calculateCarbonFootprint()" type="button" style="width: 400px; height:50px;text-align: center; font-size: 14px;background-color: #23A455; margin: 8px;">RESET</button>
+	<p id="answer" name="answer" style="font-size: 16px;padding-left: 30px; font-weight: 500; margin: 8px; color: #000000; width: 400px"></p>
+<p id="offset"  style="font-size: 16px; padding-left: 30px;font-weight: 500; margin: 8px; color: #000000; width: 400px"></p>
+   </form>
+	
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/bs-init.js"></script>
+    <script src="assets/js/zer0carb0n.js"></script>
+</body>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- This script has two on change events which when triggered makes an ajax request to a php file (test.php), which further makes
+request to the database and return the response as an html element. This response is further used to provide 
+option values to the inner html tags 
+-->
+
+<script>
+$(document).ready(function(){
+    $('#car_year').on('change', function(){
+        var year = $(this).val();
+        if(year){
+            $.ajax({
+                type:'POST',
+                url:'https://zer0carb0n.me/test.php/',
+                data:'year='+year,
+                success:function(html){
+                    $('#car_make').html(html);
+                    $('#car_model').html('<option value="">Select car brand first</option>'); 
+                }
+            }); 
+        }else{
+            $('#car_make').html('<option value="">Select car year first</option>');
+            $('#car_model').html('<option value="">Select car brand first</option>'); 
+        }
+    });
+    
+    $('#car_make').on('change', function(){
+      var e = document.getElementById("car_year");
+        var year= e.options[e.selectedIndex].value;
+        var brand = $(this).val();
+        if(brand){
+            $.ajax({
+                type:'POST',
+                url:'https://zer0carb0n.me/test.php/',
+                data:'brand='+ brand + '&yr=' + year,
+                success:function(html){
+                    $('#car_model').html(html);
+                }
+            }); 
+        }else{
+            $('#car_model').html('<option value="">Select car_model first</option>'); 
+        }
+    });
+
+
+
+});
+</script>
+<!-- This script has one calculate function when triggered makes an ajax post request to a php file (test2.php) with all the parameters 
+selected by the user. This php page further makes request to the database and 
+return the response as a variable. This response is further displayed by providing it as a value to inner html
+-->
+
+
+<script>
+function calculate()
+{
+	    var e = document.getElementById("car_year");
+        var year= e.options[e.selectedIndex].value;
+		var e1 = document.getElementById("car_make");
+        var brand= e1.options[e1.selectedIndex].value;
+		var e2 = document.getElementById("car_model");
+        var model= e2.options[e2.selectedIndex].value;
+var datastring = 'car_year=' + year + '&car_make=' + brand + '&car_model=' + model;
+$.ajax({
+    
+	type: "POST",
+	url: "https://zer0carb0n.me/test2.php/",
+	data: datastring,
+	cache: false,
+
+	success: function(response){
+		
+		
+		var final_result = parseInt(response, 10);
+		if(!isNaN(final_result)){
+		document.getElementById("answer").innerHTML="Your Car's Carbon Footprint is : "+ final_result + " gms of CO2 per km";
+		var offset_trees = final_result/7.76;
+		document.getElementById("offset").innerHTML="To offset the carbon footprint created by your car for every 100 kms you would need : "+ offset_trees.toFixed(0) + " Trees";
+	}
+	   else{
+	   document.getElementById("answer").innerHTML="Sorry!, Please select all the above options";
+	   }
+	   }
+	
+	});
+	return false;
+}
+
+
+</script>
+<script>
+	
+	function Re_calculateCarbonFootprint(){
+	    window.location.reload();
+	} 
+	
+</script>
